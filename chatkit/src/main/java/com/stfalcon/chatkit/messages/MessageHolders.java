@@ -1054,7 +1054,7 @@ public class MessageHolders {
         @Override
         public void onBind(MESSAGE message) {
             if (time != null) {
-                time.setText(DateFormatter.format(message.getCreatedAt(), DateFormatter.Template.TIME));
+                time.setText(DateFormatter.format(message.getCreatedAt(), DateFormatter.Template.TIME_12HR));
             }
 
             if (userAvatar != null) {
@@ -1112,7 +1112,7 @@ public class MessageHolders {
         @Override
         public void onBind(MESSAGE message) {
             if (time != null) {
-                time.setText(DateFormatter.format(message.getCreatedAt(), DateFormatter.Template.TIME));
+                time.setText(DateFormatter.format(message.getCreatedAt(), DateFormatter.Template.TIME_12HR));
             }
         }
 
