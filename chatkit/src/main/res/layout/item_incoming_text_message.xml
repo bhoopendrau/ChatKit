@@ -13,7 +13,9 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp" />
+        android:layout_marginRight="8dp"
+        android:visibility="gone"/>
+
 
     <com.google.android.flexbox.FlexboxLayout
         android:id="@id/bubble"
@@ -21,13 +23,34 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/message_incoming_bubble_margin_right"
         android:layout_marginRight="@dimen/message_incoming_bubble_margin_right"
-        android:layout_toEndOf="@id/messageUserAvatar"
-        android:layout_toRightOf="@id/messageUserAvatar"
         android:orientation="vertical"
         app:alignContent="stretch"
         app:alignItems="stretch"
         app:flexWrap="wrap"
         app:justifyContent="flex_end">
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@id/replyBubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/rounded_corener_blue_back"
+            android:orientation="vertical"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_end"
+            android:visibility="gone">
+            <TextView
+                android:id="@id/replyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:padding="5dp"
+                android:ellipsize="end"
+                android:text="hello world this is a taagged message"/>
+
+        </com.google.android.flexbox.FlexboxLayout>
 
         <TextView
             android:id="@id/messageText"

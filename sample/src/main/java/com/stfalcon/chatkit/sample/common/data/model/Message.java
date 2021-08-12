@@ -18,16 +18,18 @@ public class Message implements IMessage,
     private User user;
     private Image image;
     private Voice voice;
+    private Boolean isReply;
 
     public Message(String id, User user, String text) {
-        this(id, user, text, new Date());
+        this(id, user, text, new Date(), true);
     }
 
-    public Message(String id, User user, String text, Date createdAt) {
+    public Message(String id, User user, String text, Date createdAt, Boolean isReply) {
         this.id = id;
         this.text = text;
         this.user = user;
         this.createdAt = createdAt;
+        this.isReply = isReply;
     }
 
     @Override
@@ -54,6 +56,9 @@ public class Message implements IMessage,
     public String getImageUrl() {
         return image == null ? null : image.url;
     }
+
+    @Override
+    public Boolean getIsReply() {return  this.isReply; }
 
     public Voice getVoice() {
         return voice;

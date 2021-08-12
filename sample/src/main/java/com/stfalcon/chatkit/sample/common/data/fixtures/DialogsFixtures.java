@@ -65,6 +65,6 @@ public final class DialogsFixtures extends FixturesData {
                 getRandomId(),
                 getUser(),
                 getRandomMessage(),
-                date);
+                date, false);
     }
 }

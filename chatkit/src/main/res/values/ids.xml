@@ -8,6 +8,9 @@
     <item name="image" type="id" />
     <item name="imageOverlay" type="id" />
     <item name="replyText" type="id" />
+    <item name="replyBubble" type="id" />
+    <item name="imageBubble" type="id" />
+
 
     <!-- MESSAGE INPUT -->
     <item name="attachmentButton" type="id" />

@@ -1,7 +1,9 @@
 package com.stfalcon.chatkit.messages;
 
+import android.os.Build;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -9,12 +11,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.stfalcon.chatkit.R;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.ViewHolder;
@@ -743,6 +747,7 @@ public class MessageHolders {
 
         protected ViewGroup bubble;
         protected TextView text;
+        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public IncomingTextMessageViewHolder(View itemView) {
@@ -760,6 +765,10 @@ public class MessageHolders {
             super.onBind(message);
             if (bubble != null) {
                 bubble.setSelected(isSelected());
+            }
+
+            if (message.getIsReply() == true) {
+                replyBubble.setVisibility(View.VISIBLE);
             }
 
             if (text != null) {
@@ -791,6 +800,7 @@ public class MessageHolders {
         private void init(View itemView) {
             bubble = itemView.findViewById(R.id.bubble);
             text = itemView.findViewById(R.id.messageText);
+            replyBubble = itemView.findViewById(R.id.replyBubble);
         }
     }
 
@@ -802,6 +812,7 @@ public class MessageHolders {
 
         protected ViewGroup bubble;
         protected TextView text;
+        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public OutcomingTextMessageViewHolder(View itemView) {
@@ -819,6 +830,9 @@ public class MessageHolders {
             super.onBind(message);
             if (bubble != null) {
                 bubble.setSelected(isSelected());
+            }
+            if (message.getIsReply() == true) {
+                replyBubble.setVisibility(View.VISIBLE);
             }
 
             if (text != null) {
@@ -850,6 +864,7 @@ public class MessageHolders {
         private void init(View itemView) {
             bubble = itemView.findViewById(R.id.bubble);
             text = itemView.findViewById(R.id.messageText);
+            replyBubble = itemView.findViewById(R.id.replyBubble);
         }
     }
 
@@ -861,6 +876,8 @@ public class MessageHolders {
 
         protected ImageView image;
         protected View imageOverlay;
+        protected LinearLayout layout;
+        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public IncomingImageMessageViewHolder(View itemView) {
@@ -878,6 +895,10 @@ public class MessageHolders {
             super.onBind(message);
             if (image != null && imageLoader != null) {
                 imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
+                Log.d("imageLoad", "this happened");
+            }
+            if (message.getIsReply() == true) {
+                replyBubble.setVisibility(View.VISIBLE);
             }
 
             if (imageOverlay != null) {
@@ -888,6 +909,18 @@ public class MessageHolders {
         @Override
         public final void applyStyle(MessagesListStyle style) {
             super.applyStyle(style);
+
+            if (layout != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    layout.setClipToOutline(true);
+                }
+            }
+
+//            if (replyBubble != null) {
+//                replyBubble.setPadding(5, 5, 0, 0);
+//                ViewCompat.setBackground(replyBubble, style.getOutcomingBubbleDrawable());
+//            }
+
             if (time != null) {
                 time.setTextColor(style.getIncomingImageTimeTextColor());
                 time.setTextSize(TypedValue.COMPLEX_UNIT_PX, style.getIncomingImageTimeTextSize());
@@ -911,6 +944,9 @@ public class MessageHolders {
         private void init(View itemView) {
             image = itemView.findViewById(R.id.image);
             imageOverlay = itemView.findViewById(R.id.imageOverlay);
+            layout = itemView.findViewById(R.id.imageBubble);
+            replyBubble = itemView.findViewById(R.id.replyBubble);
+
 
             if (image instanceof RoundedImageView) {
                 ((RoundedImageView) image).setCorners(
@@ -931,6 +967,8 @@ public class MessageHolders {
 
         protected ImageView image;
         protected View imageOverlay;
+        protected LinearLayout imageBubble;
+        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public OutcomingImageMessageViewHolder(View itemView) {
@@ -949,6 +987,9 @@ public class MessageHolders {
             if (image != null && imageLoader != null) {
                 imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
             }
+            if (message.getIsReply() == true) {
+                replyBubble.setVisibility(View.VISIBLE);
+            }
 
             if (imageOverlay != null) {
                 imageOverlay.setSelected(isSelected());
@@ -962,6 +1003,12 @@ public class MessageHolders {
                 time.setTextColor(style.getOutcomingImageTimeTextColor());
                 time.setTextSize(TypedValue.COMPLEX_UNIT_PX, style.getOutcomingImageTimeTextSize());
                 time.setTypeface(time.getTypeface(), style.getOutcomingImageTimeTextStyle());
+            }
+
+            if (imageBubble != null) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    imageBubble.setClipToOutline(true);
+                }
             }
 
             if (imageOverlay != null) {
@@ -981,6 +1028,8 @@ public class MessageHolders {
         private void init(View itemView) {
             image = itemView.findViewById(R.id.image);
             imageOverlay = itemView.findViewById(R.id.imageOverlay);
+            imageBubble = itemView.findViewById(R.id.imageBubble);
+            replyBubble = itemView.findViewById(R.id.replyBubble);
 
             if (image instanceof RoundedImageView) {
                 ((RoundedImageView) image).setCorners(
@@ -1039,10 +1088,13 @@ public class MessageHolders {
 
         protected TextView time;
         protected ImageView userAvatar;
+        protected FlexboxLayout replyBubble;
+        protected TextView replyText;
 
         @Deprecated
         public BaseIncomingMessageViewHolder(View itemView) {
             super(itemView);
+
             init(itemView);
         }
 
@@ -1055,6 +1107,11 @@ public class MessageHolders {
         public void onBind(MESSAGE message) {
             if (time != null) {
                 time.setText(DateFormatter.format(message.getCreatedAt(), DateFormatter.Template.TIME_12HR));
+            }
+
+            if (message.getIsReply()) {
+                //replyBubble.setVisibility(View.VISIBLE);
+                Log.d("hello", "then this happened");
             }
 
             if (userAvatar != null) {
@@ -1087,6 +1144,9 @@ public class MessageHolders {
         private void init(View itemView) {
             time = itemView.findViewById(R.id.messageTime);
             userAvatar = itemView.findViewById(R.id.messageUserAvatar);
+            replyBubble = itemView.findViewById(R.id.replyBubble);
+            replyText = itemView.findViewById(R.id.replyText);
+            Log.d("hello", "this happened");
         }
     }
 

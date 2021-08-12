@@ -20,6 +20,28 @@
         app:flexWrap="wrap"
         app:justifyContent="flex_end">
 
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@id/replyBubble"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/rounded_corner_grey_back"
+            app:alignContent="stretch"
+            app:alignItems="stretch"
+            app:flexWrap="wrap"
+            app:justifyContent="flex_start"
+            android:visibility="gone">
+            <TextView
+                android:id="@id/replyText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:padding="5dp"
+                android:ellipsize="end"
+                android:text="hello world this is a taagged message"/>
+
+        </com.google.android.flexbox.FlexboxLayout>
+
         <TextView
             android:id="@id/messageText"
             android:layout_width="wrap_content"
