@@ -19,6 +19,11 @@ public class Message implements IMessage,
     private Image image;
     private Voice voice;
     private Boolean isReply;
+    private String repliedText;
+    private String replyType;
+    private String replyImageUrl;
+    private String repliedTo;
+    private String replyId;
 
     public Message(String id, User user, String text) {
         this(id, user, text, new Date(), true);
@@ -30,6 +35,11 @@ public class Message implements IMessage,
         this.user = user;
         this.createdAt = createdAt;
         this.isReply = isReply;
+        this.repliedText = "Hello world";
+        this.replyType = "Text";
+        this.replyImageUrl = "";
+        this.repliedTo = "To";
+        this.replyId = id;
     }
 
     @Override
@@ -59,6 +69,21 @@ public class Message implements IMessage,
 
     @Override
     public Boolean getIsReply() {return  this.isReply; }
+
+    @Override
+    public String getRepliedText() { return this.repliedText; }
+
+    @Override
+    public String replyType() { return this.replyType; }
+
+    @Override
+    public String replyImageUrl() { return this.replyImageUrl; }
+
+    @Override
+    public String repliedTo() { return this.repliedTo; }
+
+    @Override
+    public String getReplyId() { return replyId; }
 
     public Voice getVoice() {
         return voice;

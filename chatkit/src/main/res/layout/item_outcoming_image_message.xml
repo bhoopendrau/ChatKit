@@ -41,6 +41,17 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@id/repliedToWhom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:text="Samne Wala"
+                />
+
+            <TextView
                 android:id="@id/replyText"
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"

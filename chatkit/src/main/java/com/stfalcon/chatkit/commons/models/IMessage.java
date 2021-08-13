@@ -42,6 +42,7 @@ public interface IMessage {
      *
      * @return the message author
      */
+
     IUser getUser();
 
     /**
@@ -53,4 +54,14 @@ public interface IMessage {
 
 
     Boolean getIsReply();
+
+    String getRepliedText();
+
+    String replyType();
+
+    String replyImageUrl();
+
+    String repliedTo();
+
+    String getReplyId();
 }

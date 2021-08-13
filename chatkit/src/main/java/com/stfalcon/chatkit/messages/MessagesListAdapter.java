@@ -21,6 +21,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import androidx.annotation.LayoutRes;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.flexbox.FlexboxLayout;
 import com.stfalcon.chatkit.R;
 import com.stfalcon.chatkit.commons.ImageLoader;
 import com.stfalcon.chatkit.commons.ViewHolder;
@@ -104,9 +106,11 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Wrapper wrapper = items.get(position);
+
         holders.bind(holder, wrapper.item, wrapper.isSelected, imageLoader,
                 getMessageClickListener(wrapper),
                 getMessageLongClickListener(wrapper),
+                getReplyClickListener(wrapper),
                 dateHeadersFormatter,
                 viewClickListenersArray);
     }
@@ -594,20 +598,32 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
     }
 
     private void notifyMessageClicked(MESSAGE message) {
+
         if (onMessageClickListener != null) {
             onMessageClickListener.onMessageClick(message);
         }
     }
 
     private void notifyMessageViewClicked(View view, MESSAGE message) {
+        //Log.d("Hello", "message clicked"+view.toString());
         if (onMessageViewClickListener != null) {
             onMessageViewClickListener.onMessageViewClick(view, message);
         }
     }
 
+    private void notifyReplyViewClicked(View view, MESSAGE message) {
+       // Log.d("Hello", "message clicked and "+view.toString());
+        if (view != null) {
+            Integer index = getMessagePositionById(message.getReplyId());
+            layoutManager.scrollToPosition(index);
+        }
+    }
+
+
     private void notifyMessageLongClicked(MESSAGE message) {
         if (onMessageLongClickListener != null) {
             onMessageLongClickListener.onMessageLongClick(message);
+
         }
     }
 
@@ -628,9 +644,18 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
                 MESSAGE message = (wrapper.item);
                 notifyItemChanged(getMessagePositionById(message.getId()));
             } else {
+
                 notifyMessageClicked(wrapper.item);
                 notifyMessageViewClicked(view, wrapper.item);
             }
+
+        };
+    }
+
+    private View.OnClickListener getReplyClickListener(final Wrapper<MESSAGE> wrapper) {
+        return view -> {
+            notifyMessageClicked(wrapper.item);
+            notifyReplyViewClicked(view, wrapper.item);
         };
     }
 

@@ -10,6 +10,8 @@
     <item name="replyText" type="id" />
     <item name="replyBubble" type="id" />
     <item name="imageBubble" type="id" />
+    <item name="repliedToWhom" type="id" />
+
 
 
     <!-- MESSAGE INPUT -->

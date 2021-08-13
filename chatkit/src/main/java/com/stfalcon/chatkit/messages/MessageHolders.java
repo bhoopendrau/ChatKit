@@ -572,6 +572,7 @@ public class MessageHolders {
                         final ImageLoader imageLoader,
                         final View.OnClickListener onMessageClickListener,
                         final View.OnLongClickListener onMessageLongClickListener,
+                        final View.OnClickListener onReplyClickListener,
                         final DateFormatter.Formatter dateHeadersFormatter,
                         final SparseArray<MessagesListAdapter.OnMessageViewClickListener> clickListenersArray) {
 
@@ -580,6 +581,10 @@ public class MessageHolders {
             ((MessageHolders.BaseMessageViewHolder) holder).imageLoader = imageLoader;
             holder.itemView.setOnLongClickListener(onMessageLongClickListener);
             holder.itemView.setOnClickListener(onMessageClickListener);
+            if ( holder.itemView.findViewById(R.id.replyBubble) != null) {
+                holder.itemView.findViewById(R.id.replyBubble).setOnClickListener(onReplyClickListener);
+            }
+
 
             for (int i = 0; i < clickListenersArray.size(); i++) {
                 final int key = clickListenersArray.keyAt(i);
@@ -747,7 +752,6 @@ public class MessageHolders {
 
         protected ViewGroup bubble;
         protected TextView text;
-        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public IncomingTextMessageViewHolder(View itemView) {
@@ -767,9 +771,6 @@ public class MessageHolders {
                 bubble.setSelected(isSelected());
             }
 
-            if (message.getIsReply() == true) {
-                replyBubble.setVisibility(View.VISIBLE);
-            }
 
             if (text != null) {
                 text.setText(message.getText());
@@ -800,7 +801,6 @@ public class MessageHolders {
         private void init(View itemView) {
             bubble = itemView.findViewById(R.id.bubble);
             text = itemView.findViewById(R.id.messageText);
-            replyBubble = itemView.findViewById(R.id.replyBubble);
         }
     }
 
@@ -812,7 +812,6 @@ public class MessageHolders {
 
         protected ViewGroup bubble;
         protected TextView text;
-        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public OutcomingTextMessageViewHolder(View itemView) {
@@ -830,9 +829,6 @@ public class MessageHolders {
             super.onBind(message);
             if (bubble != null) {
                 bubble.setSelected(isSelected());
-            }
-            if (message.getIsReply() == true) {
-                replyBubble.setVisibility(View.VISIBLE);
             }
 
             if (text != null) {
@@ -864,7 +860,6 @@ public class MessageHolders {
         private void init(View itemView) {
             bubble = itemView.findViewById(R.id.bubble);
             text = itemView.findViewById(R.id.messageText);
-            replyBubble = itemView.findViewById(R.id.replyBubble);
         }
     }
 
@@ -877,7 +872,6 @@ public class MessageHolders {
         protected ImageView image;
         protected View imageOverlay;
         protected LinearLayout layout;
-        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public IncomingImageMessageViewHolder(View itemView) {
@@ -897,9 +891,6 @@ public class MessageHolders {
                 imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
                 Log.d("imageLoad", "this happened");
             }
-            if (message.getIsReply() == true) {
-                replyBubble.setVisibility(View.VISIBLE);
-            }
 
             if (imageOverlay != null) {
                 imageOverlay.setSelected(isSelected());
@@ -915,11 +906,6 @@ public class MessageHolders {
                     layout.setClipToOutline(true);
                 }
             }
-
-//            if (replyBubble != null) {
-//                replyBubble.setPadding(5, 5, 0, 0);
-//                ViewCompat.setBackground(replyBubble, style.getOutcomingBubbleDrawable());
-//            }
 
             if (time != null) {
                 time.setTextColor(style.getIncomingImageTimeTextColor());
@@ -945,7 +931,6 @@ public class MessageHolders {
             image = itemView.findViewById(R.id.image);
             imageOverlay = itemView.findViewById(R.id.imageOverlay);
             layout = itemView.findViewById(R.id.imageBubble);
-            replyBubble = itemView.findViewById(R.id.replyBubble);
 
 
             if (image instanceof RoundedImageView) {
@@ -968,7 +953,6 @@ public class MessageHolders {
         protected ImageView image;
         protected View imageOverlay;
         protected LinearLayout imageBubble;
-        protected FlexboxLayout replyBubble;
 
         @Deprecated
         public OutcomingImageMessageViewHolder(View itemView) {
@@ -986,9 +970,6 @@ public class MessageHolders {
             super.onBind(message);
             if (image != null && imageLoader != null) {
                 imageLoader.loadImage(image, message.getImageUrl(), getPayloadForImageLoader(message));
-            }
-            if (message.getIsReply() == true) {
-                replyBubble.setVisibility(View.VISIBLE);
             }
 
             if (imageOverlay != null) {
@@ -1029,7 +1010,6 @@ public class MessageHolders {
             image = itemView.findViewById(R.id.image);
             imageOverlay = itemView.findViewById(R.id.imageOverlay);
             imageBubble = itemView.findViewById(R.id.imageBubble);
-            replyBubble = itemView.findViewById(R.id.replyBubble);
 
             if (image instanceof RoundedImageView) {
                 ((RoundedImageView) image).setCorners(
@@ -1090,6 +1070,7 @@ public class MessageHolders {
         protected ImageView userAvatar;
         protected FlexboxLayout replyBubble;
         protected TextView replyText;
+        private TextView repliedToWhom;
 
         @Deprecated
         public BaseIncomingMessageViewHolder(View itemView) {
@@ -1110,8 +1091,16 @@ public class MessageHolders {
             }
 
             if (message.getIsReply()) {
-                //replyBubble.setVisibility(View.VISIBLE);
-                Log.d("hello", "then this happened");
+                if (replyBubble != null) {
+                    replyBubble.setVisibility(View.VISIBLE);
+                }
+                if (replyText != null) {
+                    replyText.setText(message.getRepliedText());
+                }
+                if (repliedToWhom != null) {
+                    repliedToWhom.setText(message.repliedTo());
+                }
+                //Log.d("hello", "then this happened");
             }
 
             if (userAvatar != null) {
@@ -1146,7 +1135,8 @@ public class MessageHolders {
             userAvatar = itemView.findViewById(R.id.messageUserAvatar);
             replyBubble = itemView.findViewById(R.id.replyBubble);
             replyText = itemView.findViewById(R.id.replyText);
-            Log.d("hello", "this happened");
+            repliedToWhom = itemView.findViewById(R.id.repliedToWhom);
+            //Log.d("hello", "this happened");
         }
     }
 
@@ -1157,6 +1147,9 @@ public class MessageHolders {
             extends BaseMessageViewHolder<MESSAGE> implements DefaultMessageViewHolder {
 
         protected TextView time;
+        protected FlexboxLayout replyBubble;
+        protected TextView replyText;
+        protected TextView repliedToWhom;
 
         @Deprecated
         public BaseOutcomingMessageViewHolder(View itemView) {
@@ -1174,6 +1167,18 @@ public class MessageHolders {
             if (time != null) {
                 time.setText(DateFormatter.format(message.getCreatedAt(), DateFormatter.Template.TIME_12HR));
             }
+
+            if (message.getIsReply() == true) {
+                if (replyBubble != null) {
+                    replyBubble.setVisibility(View.VISIBLE);
+                }
+                if (replyText != null) {
+                    replyText.setText(message.getRepliedText());
+                }
+                if (repliedToWhom != null) {
+                    repliedToWhom.setText(message.repliedTo());
+                }
+            }
         }
 
         @Override
@@ -1186,7 +1191,12 @@ public class MessageHolders {
         }
 
         private void init(View itemView) {
+
             time = itemView.findViewById(R.id.messageTime);
+            replyBubble = itemView.findViewById(R.id.replyBubble);
+            replyText = itemView.findViewById(R.id.replyText);
+            repliedToWhom = itemView.findViewById(R.id.repliedToWhom);
+
         }
     }
 

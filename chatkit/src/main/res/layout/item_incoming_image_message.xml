@@ -39,8 +39,19 @@
             app:alignContent="stretch"
             app:alignItems="stretch"
             app:flexWrap="wrap"
-            app:justifyContent="flex_end"
+            app:justifyContent="flex_start"
             android:visibility="gone">
+
+            <TextView
+                android:id="@id/repliedToWhom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:text="You"
+                />
 
             <TextView
                 android:id="@id/replyText"
