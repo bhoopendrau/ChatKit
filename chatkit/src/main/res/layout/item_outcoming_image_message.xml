@@ -19,7 +19,7 @@
 
     <LinearLayout
         android:id="@id/imageBubble"
-        android:layout_width="180dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/message_incoming_bubble_margin_right"
         android:layout_marginLeft="@dimen/message_incoming_bubble_margin_right"
@@ -47,7 +47,10 @@
                 android:textSize="10sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="3dp"
                 android:text="Samne Wala"
                 />
 
@@ -56,7 +59,9 @@
                 android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textSize="10sp"
                 android:maxLines="2"
                 android:ellipsize="end"
@@ -67,8 +72,8 @@
 
         <ImageView
             android:id="@+id/image"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             />
 
     </LinearLayout>

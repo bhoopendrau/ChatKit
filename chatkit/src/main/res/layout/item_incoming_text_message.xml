@@ -33,7 +33,7 @@
             android:id="@id/replyBubble"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corener_blue_back"
+            android:background="@drawable/rounded_corner_white_seven"
             android:orientation="vertical"
             app:alignContent="stretch"
             app:alignItems="stretch"
@@ -45,9 +45,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
-                android:padding="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="3dp"
                 android:text="You"
                 />
             <TextView
@@ -55,8 +58,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
-                android:textColor="@color/white"
-                android:padding="5dp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:ellipsize="end"
                 android:text="hello world this is a taagged message"/>
 
