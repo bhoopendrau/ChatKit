@@ -53,9 +53,9 @@ class RecyclerScrollMoreListener
     @Override
     public void onScrolled(RecyclerView view, int dx, int dy) {
         if (loadMoreListener != null) {
-            Log.d("Scrolled", "In Library");
             int lastVisibleItemPosition = 0;
             int totalItemCount = mLayoutManager.getItemCount();
+            Log.d("Scrolled", "In Library with : "+totalItemCount);
 
             if (mLayoutManager instanceof StaggeredGridLayoutManager) {
                 int[] lastVisibleItemPositions = ((StaggeredGridLayoutManager) mLayoutManager).findLastVisibleItemPositions(null);
