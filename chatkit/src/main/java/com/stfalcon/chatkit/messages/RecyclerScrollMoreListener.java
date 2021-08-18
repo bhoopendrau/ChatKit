@@ -16,6 +16,8 @@
 
 package com.stfalcon.chatkit.messages;
 
+import android.util.Log;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +53,7 @@ class RecyclerScrollMoreListener
     @Override
     public void onScrolled(RecyclerView view, int dx, int dy) {
         if (loadMoreListener != null) {
+            Log.d("Scrolled", "In Library");
             int lastVisibleItemPosition = 0;
             int totalItemCount = mLayoutManager.getItemCount();
 
