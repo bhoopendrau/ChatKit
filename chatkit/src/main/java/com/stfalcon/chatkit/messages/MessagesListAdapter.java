@@ -19,6 +19,7 @@ package com.stfalcon.chatkit.messages;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -78,6 +79,8 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
      * @param senderId    identifier of sender.
      * @param imageLoader image loading method.
      */
+
+
     public MessagesListAdapter(String senderId, ImageLoader imageLoader) {
         this(senderId, new MessageHolders(), imageLoader);
     }
@@ -120,6 +123,9 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
         return items.size();
     }
 
+    public Wrapper getMessageByPosition(Integer position) {
+        return items.get(position);
+    }
     @Override
     public int getItemViewType(int position) {
         return holders.getViewType(items.get(position).item, senderId);
@@ -979,12 +985,15 @@ public class MessagesListAdapter<MESSAGE extends IMessage>
             }
         }
 
+
+
         @Override
         public void applyStyle(MessagesListStyle style) {
             if (text != null) {
                 text.setTextColor(style.getDateHeaderTextColor());
                 text.setTextSize(TypedValue.COMPLEX_UNIT_PX, style.getDateHeaderTextSize());
-                text.setTypeface(text.getTypeface(), style.getDateHeaderTextStyle());
+                //text.setTypeface(text.getTypeface(), style.getDateHeaderTextStyle());
+                text.setTypeface(text.getTypeface(), Typeface.NORMAL);
                 text.setPadding(style.getDateHeaderPadding(), style.getDateHeaderPadding(),
                         style.getDateHeaderPadding(), style.getDateHeaderPadding());
             }
